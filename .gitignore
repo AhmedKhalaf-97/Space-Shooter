@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+/.vs/Space Shooter
+/x64/Debug
+*.sln
+*.vcxproj
+*.filters
+*.user
