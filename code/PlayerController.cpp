@@ -1,8 +1,12 @@
 #include "PlayerController.h"
 
-PlayerController::PlayerController(Vector2f initialPosition): Controller(initialPosition)
+PlayerController::PlayerController(): Controller()
 {
 }
+
+//PlayerController::PlayerController(Vector2f initialPosition): Controller(initialPosition)
+//{
+//}
 
 void PlayerController::Move()
 {

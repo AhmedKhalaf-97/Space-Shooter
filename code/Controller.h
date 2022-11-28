@@ -9,11 +9,14 @@ using namespace sf;
 class Controller
 {
 public:
+	Controller();
 	Controller(Vector2f initialPosition);
 	RectangleShape GetShape();
 	virtual void Move() = 0;
+	void Create(Vector2f initialPosition);
 	void SetMovingSpeed(int speed);
 	void SetMovingDirection(Vector2f dir);
+	Vector2f GetMovingDirection();
 	void SetHealthAmount(int healthAmount);
 	void TakeDamage(int damageAmount);
 	void AssignWeapon();

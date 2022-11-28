@@ -1,18 +1,13 @@
 #include "Controller.h"
 
+Controller::Controller()
+{
+	Create(Vector2f(0,0));
+}
+
 Controller::Controller(Vector2f initialPosition)
 {
-	position = initialPosition;
-	healthAmount = 100;
-	movingSpeed = 1000.0f;
-
-	rectangleShape.setSize(Vector2f(70,100));
-	FloatRect objectRect = rectangleShape.getLocalBounds();
-	rectangleShape.setOrigin(objectRect.left +
-		objectRect.width / 2.0f,
-		objectRect.top +
-		objectRect.height / 2.0f);
-	rectangleShape.setPosition(initialPosition);
+	Create(initialPosition);
 }
 
 RectangleShape Controller::GetShape()
@@ -25,6 +20,21 @@ void Controller::SetHealthAmount(int healthAmount)
 	this->healthAmount = healthAmount;
 }
 
+void Controller::Create(Vector2f initialPosition)
+{
+	position = initialPosition;
+	healthAmount = 100;
+	movingSpeed = 1000.0f;
+
+	rectangleShape.setSize(Vector2f(70, 100));
+	FloatRect objectRect = rectangleShape.getLocalBounds();
+	rectangleShape.setOrigin(objectRect.left +
+		objectRect.width / 2.0f,
+		objectRect.top +
+		objectRect.height / 2.0f);
+	rectangleShape.setPosition(initialPosition);
+}
+
 void Controller::SetMovingSpeed(int speed)
 {
 	this->movingSpeed = speed;
@@ -33,6 +43,11 @@ void Controller::SetMovingSpeed(int speed)
 void Controller::SetMovingDirection(Vector2f dir)
 {
 	this->movingDirection = dir;
+}
+
+Vector2f Controller::GetMovingDirection()
+{
+	return movingDirection;
 }
 
 void Controller::TakeDamage(int damageAmount)
@@ -79,9 +94,9 @@ void Controller::UpdatePosition(Time dt, Vector2f screenResolution)
 	{
 		position.y = screenResolution.y - screenEdgeSize;
 	}
-	if (position.y < screenEdgeSize)
+	if (position.y < screenResolution.y * 0.30)
 	{
-		position.y = screenEdgeSize;
+		position.y = screenResolution.y * 0.30;
 	}
 
 	rectangleShape.setPosition(position);
