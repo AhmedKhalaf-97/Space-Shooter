@@ -11,7 +11,7 @@ class Controller
 public:
 	Controller();
 	Controller(Vector2f initialPosition);
-	RectangleShape GetShape();
+	Sprite GetSprite();
 	virtual void Move() = 0;
 	void Create(Vector2f initialPosition);
 	void SetMovingSpeed(int speed);
@@ -23,7 +23,8 @@ public:
 	void MoveWeaponAlongWithController();
 	void UpdatePosition(Time dt, Vector2f screenResolution);
 private:
-	RectangleShape rectangleShape;
+	Texture myTexture;
+	Sprite mySprite;
 	Vector2f position;
 	Vector2f movingDirection;
 	float movingSpeed;

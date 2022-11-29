@@ -10,9 +10,9 @@ Controller::Controller(Vector2f initialPosition)
 	Create(initialPosition);
 }
 
-RectangleShape Controller::GetShape()
+Sprite Controller::GetSprite()
 {
-	return rectangleShape;
+	return mySprite;
 }
 
 void Controller::SetHealthAmount(int healthAmount)
@@ -26,13 +26,16 @@ void Controller::Create(Vector2f initialPosition)
 	healthAmount = 100;
 	movingSpeed = 1000.0f;
 
-	rectangleShape.setSize(Vector2f(70, 100));
-	FloatRect objectRect = rectangleShape.getLocalBounds();
-	rectangleShape.setOrigin(objectRect.left +
+	myTexture.loadFromFile("graphics/destroyer.png");
+	mySprite.setTexture(myTexture);
+	mySprite.setScale(0.35, 0.35);
+	mySprite.setRotation(-90);
+	FloatRect objectRect = mySprite.getLocalBounds();
+	mySprite.setOrigin(objectRect.left +
 		objectRect.width / 2.0f,
 		objectRect.top +
 		objectRect.height / 2.0f);
-	rectangleShape.setPosition(initialPosition);
+	mySprite.setPosition(initialPosition);
 }
 
 void Controller::SetMovingSpeed(int speed)
@@ -99,5 +102,5 @@ void Controller::UpdatePosition(Time dt, Vector2f screenResolution)
 		position.y = screenResolution.y * 0.30;
 	}
 
-	rectangleShape.setPosition(position);
+	mySprite.setPosition(position);
 }

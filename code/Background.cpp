@@ -4,11 +4,14 @@ void GameEngine::CreateBackground()
 {
 	backgroundTexture.loadFromFile("graphics/background.png");
 
-	int textureWidth = backgroundTexture.getSize().x;
-	int textureHeight = backgroundTexture.getSize().y;
+	textureWidth = backgroundTexture.getSize().x;
+	textureHeight = backgroundTexture.getSize().y;
 
-	int rows = ceil(screenResolution.y / textureHeight);
-	int cols = ceil(screenResolution.x / textureWidth);
+	rows = ceil(screenResolution.y / textureHeight);
+	cols = ceil(screenResolution.x / textureWidth);
+
+	minY = -rows * textureHeight;
+	maxY = rows * textureHeight;
 
 	int spritesCount = rows * cols * 3;
 
@@ -30,15 +33,6 @@ void GameEngine::CreateBackground()
 
 void GameEngine::UpdateBackground(Time dt, int playerDirection)
 {
-	int baseSpeed = 500;
-	int speed = baseSpeed;
-
-	int textureHeight = backgroundTexture.getSize().y;
-	int rows = ceil(screenResolution.y / textureHeight);
-
-	int minY = -rows * textureHeight;
-	int maxY = rows * textureHeight;
-
 	if (playerDirection == -1) // Player is moving forward.
 	{
 		speed = baseSpeed * 2;

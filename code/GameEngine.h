@@ -6,6 +6,7 @@
 #include <sstream>
 #include <cmath>
 #include <iostream>
+#include "../code/libraries/Spritesheet.h"
 
 #include "PlayerController.h"
 
@@ -23,6 +24,10 @@ public:
 	void UpdateBackground(Time dt, int playerDirection);
 	void Run();
 private:
+	Clock clock;
+
+	bool isGameRunning = true;
+
 	Vector2f screenResolution;
 
 	RenderWindow window;
@@ -38,9 +43,21 @@ private:
 
 	PlayerController player;
 
-	Clock clock;
+#pragma region Dynamic background stuff
+	int textureWidth;
+	int textureHeight;
 
-	bool isGameRunning = true;
+	int rows;
+	int cols;
+
+	int minY;
+	int maxY;
+
+	int baseSpeed = 500;
+	int speed = baseSpeed;
+#pragma endregion
+
+
 };
 
 #endif

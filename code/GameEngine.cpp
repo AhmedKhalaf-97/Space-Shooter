@@ -24,6 +24,15 @@ GameEngine::GameEngine()
 
 void GameEngine::Run()
 {
+    Texture explosionTexture;
+    explosionTexture.loadFromFile("graphics/explosion_sp.png");
+    Spritesheet sp;
+    sp.Create(explosionTexture, 4, 5);
+    sp.SetPosition(Vector2f(500, 500));
+    sp.SetScale(Vector2f(2,2));
+    sp.SetAnimationRate(0.05);
+    sp.SetIsLooping(true);
+
     while (window.isOpen())
     {
         Event event;
@@ -50,6 +59,8 @@ void GameEngine::Run()
 
         UpdateBackground(dt, player.GetMovingDirection().y);
 
+        sp.PlayAnimation(dt);
+
         window.clear();
 
         window.setView(mainView);
@@ -59,7 +70,9 @@ void GameEngine::Run()
             window.draw(backgroundSprite);
         }
 
-        window.draw(player.GetShape());
+        window.draw(player.GetSprite());
+
+        window.draw(sp.GetSprite());
 
         window.setView(hudView);
         window.draw(hud);
