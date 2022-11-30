@@ -65,10 +65,7 @@ void GameEngine::Run()
 
         window.setView(mainView);
 
-        for (Sprite& backgroundSprite : backgroundSprites)
-        {
-            window.draw(backgroundSprite);
-        }
+        window.draw(Sprite(finalBackgroundRenderTexture.getTexture()));
 
         window.draw(player.GetSprite());
 

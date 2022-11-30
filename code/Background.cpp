@@ -29,6 +29,8 @@ void GameEngine::CreateBackground()
 			i++;
 		}
 	}
+
+	finalBackgroundRenderTexture.create(screenResolution.x, screenResolution.y);
 }
 
 void GameEngine::UpdateBackground(Time dt, int playerDirection)
@@ -46,14 +48,22 @@ void GameEngine::UpdateBackground(Time dt, int playerDirection)
 		speed = baseSpeed;
 	}
 
+	//finalBackgroundRenderTexture.clear();
 	for (Sprite& backgroundSprite : backgroundSprites)
 	{
-		if (backgroundSprite.getPosition().y >= maxY)
+		float xPos = backgroundSprite.getPosition().x;
+		float yPos = backgroundSprite.getPosition().y;
+		float velocity = speed * dt.asSeconds();
+
+		if (yPos >= maxY + textureHeight)
 		{
-			backgroundSprite.setPosition(backgroundSprite.getPosition().x, minY);
+			yPos = minY;
 		}
 
-		backgroundSprite.setPosition(backgroundSprite.getPosition().x,
-					 backgroundSprite.getPosition().y + speed * dt.asSeconds());
+		backgroundSprite.setPosition(xPos, yPos + velocity);
+
+		finalBackgroundRenderTexture.draw(backgroundSprite);
 	}
+
+	finalBackgroundRenderTexture.display();
 }

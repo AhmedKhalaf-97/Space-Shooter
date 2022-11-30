@@ -40,6 +40,7 @@ private:
 
 	Texture backgroundTexture;
 	vector<Sprite> backgroundSprites;
+	RenderTexture finalBackgroundRenderTexture;
 
 	PlayerController player;
 
@@ -50,11 +51,11 @@ private:
 	int rows;
 	int cols;
 
-	int minY;
-	int maxY;
+	float minY;
+	float maxY;
 
-	int baseSpeed = 500;
-	int speed = baseSpeed;
+	float baseSpeed = 500;
+	float speed = baseSpeed;
 #pragma endregion
 
 
