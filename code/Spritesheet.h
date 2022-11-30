@@ -3,7 +3,7 @@
 #ifndef SPRITESHEET_H
 #define SPRITESHEET_H
 
-#include <SFML\Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 using namespace sf;
 
