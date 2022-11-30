@@ -6,7 +6,7 @@
 #include <sstream>
 #include <cmath>
 #include <iostream>
-#include "../code/libraries/Spritesheet.h"
+#include "Spritesheet.h"
 
 #include "PlayerController.h"
 
