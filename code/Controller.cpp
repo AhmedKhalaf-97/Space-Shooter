@@ -53,6 +53,11 @@ Vector2f Controller::GetMovingDirection()
 	return movingDirection;
 }
 
+Vector2f Controller::GetPosition()
+{
+	return position;
+}
+
 void Controller::TakeDamage(int damageAmount)
 {
 	if (healthAmount > 0)
@@ -70,15 +75,7 @@ void Controller::TakeDamage(int damageAmount)
 	}
 }
 
-void Controller::AssignWeapon()
-{
-}
-
-void Controller::MoveWeaponAlongWithController()
-{
-}
-
-void Controller::UpdatePosition(Time dt, Vector2f screenResolution)
+void Controller::UpdateController(Time dt, Vector2f screenResolution)
 {
 	int screenEdgeSize = 100;
 
@@ -103,4 +100,6 @@ void Controller::UpdatePosition(Time dt, Vector2f screenResolution)
 	}
 
 	mySprite.setPosition(position);
+
+	//UpdateWeapons(dt, position);
 }

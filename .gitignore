@@ -36,3 +36,5 @@
 *.vcxproj
 *.filters
 *.user
+/.$Space-Shooter UML.drawio.bkp
+/.$Space-Shooter UML.drawio.dtmp

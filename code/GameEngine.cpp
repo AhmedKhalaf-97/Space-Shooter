@@ -6,7 +6,7 @@ GameEngine::GameEngine()
 	screenResolution.y = VideoMode::getDesktopMode().height;
 
 	window.create(VideoMode(screenResolution.x, screenResolution.y),
-		"Space Shooter", Style::Fullscreen);
+		"Space Shooter", Style::Default);
 
 	 mainView.reset(FloatRect(0, 0, screenResolution.x, screenResolution.y));
 	 hudView.reset(FloatRect(0, 0, screenResolution.x, screenResolution.y));
@@ -55,7 +55,9 @@ void GameEngine::Run()
         hud.setString(ss.str());
 
         player.Move();
-        player.UpdatePosition(dt, screenResolution);
+        player.CheckIfShouldChangeWeapon();
+        player.CheckIfShouldFire(dt);
+        player.UpdateController(dt, screenResolution);
 
         UpdateBackground(dt, player.GetMovingDirection().y);
 
@@ -68,6 +70,11 @@ void GameEngine::Run()
         window.draw(Sprite(finalBackgroundRenderTexture.getTexture()));
 
         window.draw(player.GetSprite());
+
+        for (Sprite& projectileSprite : player.GetProjectileSprites())
+        {
+            window.draw(projectileSprite);
+        }
 
         window.draw(sp.GetSprite());
 

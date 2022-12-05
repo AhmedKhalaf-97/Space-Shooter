@@ -2,11 +2,13 @@
 
 PlayerController::PlayerController(): Controller()
 {
+	AssignWeapons();
 }
 
-//PlayerController::PlayerController(Vector2f initialPosition): Controller(initialPosition)
-//{
-//}
+PlayerController::PlayerController(Vector2f initialPosition): Controller(initialPosition)
+{
+	AssignWeapons();
+}
 
 void PlayerController::Move()
 {
@@ -32,4 +34,61 @@ void PlayerController::Move()
 	}
 
 	SetMovingDirection(dir);
+}
+
+void PlayerController::CheckIfShouldFire(Time dt)
+{
+	if (Keyboard::isKeyPressed(Keyboard::Space))
+	{
+		weaponsAssigned[selectedProjectileType].Fire(dt);
+	}
+}
+
+void PlayerController::CheckIfShouldChangeWeapon()
+{
+	if (Keyboard::isKeyPressed(Keyboard::Num1))
+	{
+		selectedProjectileType = ProjectileType::Bullet_Type;
+	}
+
+	if (Keyboard::isKeyPressed(Keyboard::Num2))
+	{
+		selectedProjectileType = ProjectileType::Missile_Type;
+	}
+}
+
+void PlayerController::AssignWeapons()
+{
+	weaponsAssigned[0] = Weapon(ProjectileType::Bullet_Type);
+	weaponsAssigned[1] = Weapon(ProjectileType::Missile_Type);
+}
+
+void PlayerController::UpdateWeapons(Time dt, Vector2f newPos)
+{
+	weaponsAssigned[0].Update(dt, newPos, screenResolution);
+	weaponsAssigned[1].Update(dt, newPos, screenResolution);
+}
+
+vector<Sprite> PlayerController::GetProjectileSprites()
+{
+	vector<Sprite> allProjectileSprites = weaponsAssigned[0].GetActiveProjectileSprites();
+
+	for (Sprite& thisSprite : weaponsAssigned[1].GetActiveProjectileSprites())
+	{
+		allProjectileSprites.push_back(thisSprite);
+	}
+
+	return allProjectileSprites;
+}
+
+void PlayerController::UpdateController(Time dt, Vector2f screenResolution)
+{
+	if (this->screenResolution.x == 0 || this->screenResolution.y == 0)
+	{
+		this->screenResolution = screenResolution;
+	}
+
+	Controller::UpdateController(dt, screenResolution);
+
+	UpdateWeapons(dt, this->GetPosition());
 }

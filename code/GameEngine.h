@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef GAMEENGINE_H
 #define GAMEENGINE_H
 
@@ -6,15 +8,14 @@
 #include <sstream>
 #include <cmath>
 #include <iostream>
+
 #include "Spritesheet.h"
 
 #include "PlayerController.h"
+#include "Projectile.h"
 
 using namespace sf;
 using namespace std;
-
-
-using namespace sf;
 
 class GameEngine
 {
@@ -38,13 +39,13 @@ private:
 	Text hud;
 	Font font;
 
+	PlayerController player;
+
+#pragma region Dynamic background stuff
 	Texture backgroundTexture;
 	vector<Sprite> backgroundSprites;
 	RenderTexture finalBackgroundRenderTexture;
 
-	PlayerController player;
-
-#pragma region Dynamic background stuff
 	int textureWidth;
 	int textureHeight;
 
@@ -58,7 +59,8 @@ private:
 	float speed = baseSpeed;
 #pragma endregion
 
-
+	//ProjectileObjectsPool projectileObjectsPool;
+vector<Projectile*> projectiles;
 };
 
 #endif
