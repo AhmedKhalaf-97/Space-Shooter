@@ -103,7 +103,9 @@ vector<Projectile*> EnemyAIController::GetProjectiles()
 
 void EnemyAIController::UpdateController(Time dt, Vector2f screenResolution)
 {
-	if (enabled)
+	PlayHitVFX(dt);
+
+	if (IsAlive())
 	{
 		if (this->screenResolution.x == 0 || this->screenResolution.y == 0)
 		{
@@ -117,17 +119,7 @@ void EnemyAIController::UpdateController(Time dt, Vector2f screenResolution)
 
 		SetPosition(position);
 
-		Vector2f offset(10, 200);
+		Vector2f offset(15, 150);
 		UpdateWeapons(dt, (this->GetPosition() + offset));
 	}
-}
-
-bool EnemyAIController::IsEnabled()
-{
-	return enabled;
-}
-
-void EnemyAIController::SetIsEnabled(bool condition)
-{
-	enabled = condition;
 }

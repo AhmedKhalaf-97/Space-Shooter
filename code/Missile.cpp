@@ -9,10 +9,12 @@ void Missile::ConfigureProjectile()
 	texture.loadFromFile("graphics/missile.png");
 	sprite.setTexture(texture);
 
+	CenterTheOrigin();
+
 	SetSpeed(2000);
 	SetDirection(Vector2f(0, -1));
 	SetRotation(-90);
-	SetScale(Vector2f(1, 1));
+	SetScale(Vector2f(0.5, 0.5));
 
-	SetDamageAmount(100);
+	SetDamageAmount(200);
 }

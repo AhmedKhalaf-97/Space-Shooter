@@ -26,6 +26,7 @@ public:
 	Sprite GetSprite();
 	void UpdatePositionWhenActive(Time dt, Vector2f screenResolution);
 	FloatRect GetFloatRect();
+	void CenterTheOrigin();
 
 protected:
 	Texture texture;

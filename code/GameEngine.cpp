@@ -6,7 +6,7 @@ GameEngine::GameEngine()
 	screenResolution.y = VideoMode::getDesktopMode().height;
 
 	window.create(VideoMode(screenResolution.x, screenResolution.y),
-		"Space Shooter", Style::Default);
+		"Space Shooter", Style::Fullscreen);
 
 	 mainView.reset(FloatRect(0, 0, screenResolution.x, screenResolution.y));
 	 hudView.reset(FloatRect(0, 0, screenResolution.x, screenResolution.y));
@@ -22,6 +22,8 @@ GameEngine::GameEngine()
 	player.Create(Vector2f(screenResolution.x / 2, screenResolution.y - 100));
 
     SpawnEnemies();
+
+    InstantiateExplosionVFXsObjects();
 }
 
 void GameEngine::SpawnEnemies()
@@ -54,7 +56,7 @@ void GameEngine::UpdateEnemiesAIBehaviour()
     aliveEnemies.clear();
     for (int i = 0; i < enemies.size(); i++)
     {
-        if (enemies[i]->IsEnabled())
+        if (enemies[i]->IsAlive())
         {
             aliveEnemies.push_back(enemies[i]);
         }
@@ -91,17 +93,48 @@ void GameEngine::GetAllObjectsAndCheckForCollisions()
     collisionDetection.CheckForCollisions(allProjectiles, allControllers);
 }
 
+void GameEngine::InstantiateExplosionVFXsObjects()
+{
+    explosionTexture.loadFromFile("graphics/explosion_sp.png");
+    for (int i = 0; i < explosionVFXsPoolCount; i++)
+    {
+        Spritesheet* sp = new Spritesheet;
+        sp->Create(explosionTexture, 4, 5);
+        sp->SetScale(Vector2f(2, 2));
+        sp->SetAnimationRate(0.05);
+        sp->SetIsLooping(false);
+        sp->SetIsPlaying(false);
+
+        explosionVFXs.push_back(sp);
+    }
+}
+
+void GameEngine::PlayExplosions()
+{
+    for (int i = 0; i < allControllers.size(); i++)
+    {
+        if (allControllers[i]->ShouldDestroy())
+        {
+            explosionVFXs[availableExplosionVFXsIndex]->SetPosition(allControllers[i]->GetExplosionPosition());
+            explosionVFXs[availableExplosionVFXsIndex]->SetIsPlaying(true);
+
+            availableExplosionVFXsIndex++;
+        }
+    }
+
+    if (availableExplosionVFXsIndex >= explosionVFXsPoolCount)
+    {
+        availableExplosionVFXsIndex = 0;
+    }
+
+    for (int i = 0; i < availableExplosionVFXsIndex; i++)
+    {
+        explosionVFXs[i]->PlayAnimation(dt);
+    }
+}
+
 void GameEngine::Run()
 {
-    Texture explosionTexture;
-    explosionTexture.loadFromFile("graphics/explosion_sp.png");
-    Spritesheet sp;
-    sp.Create(explosionTexture, 4, 5);
-    sp.SetPosition(Vector2f(500, 500));
-    sp.SetScale(Vector2f(2,2));
-    sp.SetAnimationRate(0.05);
-    sp.SetIsLooping(true);
-
     while (window.isOpen())
     {
         Event event;
@@ -134,7 +167,7 @@ void GameEngine::Run()
 
         UpdateBackground(player.GetMovingDirection().y);
 
-        sp.PlayAnimation(dt);
+        PlayExplosions();
 
         Draw();
     }
@@ -159,13 +192,17 @@ void GameEngine::Draw()
     {
         window.draw(aliveEnemies[i]->GetSprite());
 
-        for (Sprite& projectileSprite : enemies[i]->GetProjectileSprites())
+        for (Sprite& projectileSprite : aliveEnemies[i]->GetProjectileSprites())
         {
             window.draw(projectileSprite);
         }
     }
 
-    //window.draw(sp.GetSprite());
+    for (Spritesheet* explosionSS : explosionVFXs)
+    {
+        if(explosionSS->IsStillPlaying())
+            window.draw(explosionSS->GetSprite());        
+    }
 
     window.setView(hudView);
     window.draw(hud);

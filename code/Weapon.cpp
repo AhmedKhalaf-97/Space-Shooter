@@ -18,7 +18,6 @@ Weapon::Weapon(ProjectileType projectile)
 		 {
 			 Bullet* newBullet = new Bullet(position);
 			 newBullet->ConfigureProjectile();
-			 newBullet->GetSprite().setTextureRect(IntRect(position.x, position.y, 1, 1));
 			 projectiles.push_back(newBullet);
 		 }
 	 }
@@ -33,7 +32,6 @@ Weapon::Weapon(ProjectileType projectile)
 		 {
 			 Missile* newMissile = new Missile(position);
 			 newMissile->ConfigureProjectile();
-			 newMissile->GetSprite().setTextureRect(IntRect(position.x, position.y, 600, 600));
 			 projectiles.push_back(newMissile);
 		 }
 	 }
@@ -62,15 +60,13 @@ void Weapon::SetFireRate(float rate)
 
 void Weapon::Fire(Time dt)
 {
-	Vector2f positionWithOffset = Vector2f(position.x - 35, position.y - 60);
-
 	elapsedTime += dt.asSeconds();
 	if (elapsedTime >= nextTimeToFire)
 	{
 		nextTimeToFire = fireRate + elapsedTime;
 
 		projectiles[remainingAmmoCount-1]->ActivateProjectile();
-		projectiles[remainingAmmoCount-1]->SetPosition(positionWithOffset);
+		projectiles[remainingAmmoCount-1]->SetPosition(position);
 
 		remainingAmmoCount--;
 

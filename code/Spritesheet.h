@@ -23,7 +23,8 @@ public:
 	void SetAnimationRate(float rate);
 	bool CheckIfLooping();
 	void SetIsLooping(bool condition);
-	bool CheckIfStillPlaying();
+	bool IsStillPlaying();
+	void SetIsPlaying(bool condition);
 	Sprite GetSprite();
 	void PlayAnimation(Time timeElapsed);
 private:
@@ -45,7 +46,7 @@ private:
 	int r = 0;
 
 	bool isLooping = false;
-	bool stopPlaying = false;
+	bool isPlaying = true;
 };
 
 #endif // !SPRITESHEET_H

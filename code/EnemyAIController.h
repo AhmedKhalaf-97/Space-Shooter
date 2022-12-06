@@ -23,14 +23,10 @@ public:
 	vector<Sprite> GetProjectileSprites() override;
 	vector<Projectile*> GetProjectiles() override;
 	void UpdateController(Time dt, Vector2f screenResolution);
-	bool IsEnabled();
-	void SetIsEnabled(bool condition);
 
 private:
 	ProjectileType selectedProjectileType = ProjectileType::Bullet_Type;
 	Vector2f screenResolution;
-
-	bool enabled = true;
 
 	PlayerController* player;
 	vector<EnemyAIController*>* aliveEnemies;

@@ -27,6 +27,12 @@ void Spritesheet::SetPosition(Vector2f position)
 {
 	m_position = position;
 	m_sprite.setPosition(m_position);
+
+	FloatRect objectRect = m_sprite.getLocalBounds();
+	m_sprite.setOrigin(objectRect.left +
+		objectRect.width / 2.0f,
+		objectRect.top +
+		objectRect.height / 2.0f);
 }
 
 void Spritesheet::SetScale(Vector2f scale)
@@ -56,9 +62,14 @@ void Spritesheet::SetIsLooping(bool condition)
 	isLooping = condition;
 }
 
-bool Spritesheet::CheckIfStillPlaying()
+bool Spritesheet::IsStillPlaying()
 {
-	return !stopPlaying;
+	return isPlaying;
+}
+
+void Spritesheet::SetIsPlaying(bool condition)
+{
+	isPlaying = condition;
 }
 
 Sprite Spritesheet::GetSprite()
@@ -68,7 +79,7 @@ Sprite Spritesheet::GetSprite()
 
 void Spritesheet::PlayAnimation(Time dt)
 {
-	if (!stopPlaying)
+	if (isPlaying)
 	{
 
 		elapsedTime += dt.asSeconds();
@@ -99,7 +110,7 @@ void Spritesheet::PlayAnimation(Time dt)
 
 				if (!isLooping && c == 0 && r == 0)
 				{
-					stopPlaying = true;
+					isPlaying = false;
 				}
 			}
 

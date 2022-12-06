@@ -69,15 +69,14 @@ void Controller::TakeDamage(int damageAmount)
 	{
 		healthAmount -= damageAmount;
 
-		if (healthAmount <= 0)
-		{
-			healthAmount = 0;
-		}
+		shouldPlayHitVFX = true;
 	}
-	else
+
+	if (healthAmount <= 0)
 	{
-		cout << "Killed" << endl;
 		healthAmount = 0;
+		SetIsAlive(false);
+		shouldDestroy = true;
 	}
 }
 
@@ -111,4 +110,43 @@ void Controller::UpdateController(Time dt, Vector2f screenResolution)
 FloatRect Controller::GetFloatRect()
 {
 	return mySprite.getGlobalBounds();
+}
+
+bool Controller::IsAlive()
+{
+	return alive;
+}
+
+void Controller::SetIsAlive(bool condition)
+{
+	alive = condition;
+}
+
+void Controller::PlayHitVFX(Time dt)
+{
+	if (shouldPlayHitVFX)
+	{
+		mySprite.setColor(Color::Red);
+
+		elapsedTime += dt.asSeconds();
+		if (elapsedTime >= nextTimeToFlash)
+		{
+			nextTimeToFlash = flashRate + elapsedTime;
+
+			mySprite.setColor(Color::White);
+
+			shouldPlayHitVFX = false;
+		}
+	}
+}
+
+bool Controller::ShouldDestroy()
+{
+	return shouldDestroy;
+}
+
+Vector2f Controller::GetExplosionPosition()
+{
+	shouldDestroy = false; //reset it
+	return position;
 }

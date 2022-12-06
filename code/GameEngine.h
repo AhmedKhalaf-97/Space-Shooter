@@ -28,6 +28,8 @@ public:
 	void SpawnEnemies();
 	void UpdateEnemiesAIBehaviour();
 	void GetAllObjectsAndCheckForCollisions();
+	void InstantiateExplosionVFXsObjects();
+	void PlayExplosions();
 	void Run();
 	void Draw();
 private:
@@ -73,8 +75,13 @@ private:
 	float speed = baseSpeed;
 #pragma endregion
 
-	int enemiesCount = 2; // Preferably to be in one of those numbers 4, 9, 16, 25, 36, 49, 64, etc...
+	int enemiesCount = 64; // Preferably to be in one of those numbers 4, 9, 16, 25, 36, 49, 64, etc...
 	int enemiesAlive;
+
+	int explosionVFXsPoolCount = 100;
+	int availableExplosionVFXsIndex = 0;
+	Texture explosionTexture;
+	vector<Spritesheet*> explosionVFXs;
 };
 
 #endif

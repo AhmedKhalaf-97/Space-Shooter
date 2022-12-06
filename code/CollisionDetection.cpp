@@ -6,10 +6,10 @@ void CollisionDetection::CheckForCollisions(vector<Projectile*>& projectiles, ve
 	{
 		for (Controller* controller : controllers)
 		{
-			if (projectile->GetFloatRect().intersects(controller->GetFloatRect()))
+			if (projectile->IsItActive() && projectile->GetFloatRect().intersects(controller->GetFloatRect()))
 			{
-				cout << "Hit" << endl;
-				controller->TakeDamage(1);
+				controller->TakeDamage(projectile->GetDamageAmount());
+				projectile->DeactivateProjectile();
 			}
 		}
 	}

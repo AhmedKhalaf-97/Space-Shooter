@@ -18,6 +18,17 @@ void Projectile::SetTexture(std::string fileName)
 {
 	texture.loadFromFile(fileName);
 	sprite.setTexture(texture);
+
+	CenterTheOrigin();
+}
+
+void Projectile::CenterTheOrigin()
+{
+	FloatRect objectRect = sprite.getLocalBounds();
+	sprite.setOrigin(objectRect.left +
+		objectRect.width / 2.0f,
+		objectRect.top +
+		objectRect.height / 2.0f);
 }
 
 void Projectile::SetPosition(Vector2f position)
@@ -52,7 +63,7 @@ void Projectile::SetDamageAmount(int damageAmount)
 
 int Projectile::GetDamageAmount()
 {
-	return damageAmount;
+	return (isActive) ? damageAmount : 0;
 }
 
 void Projectile::ActivateProjectile()

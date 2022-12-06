@@ -12,7 +12,7 @@ PlayerController::PlayerController(Vector2f initialPosition): Controller(initial
 
 void PlayerController::Create(Vector2f initialPosition)
 {
-	healthAmount = 1000;
+	healthAmount = 100;
 	movingSpeed = 1000.0f;
 
 	myTexture.loadFromFile("graphics/destroyer.png");
@@ -109,6 +109,8 @@ vector<Projectile*> PlayerController::GetProjectiles()
 
 void PlayerController::UpdateController(Time dt, Vector2f screenResolution)
 {
+	PlayHitVFX(dt);
+
 	if (this->screenResolution.x == 0 || this->screenResolution.y == 0)
 	{
 		this->screenResolution = screenResolution;
@@ -116,5 +118,6 @@ void PlayerController::UpdateController(Time dt, Vector2f screenResolution)
 
 	Controller::UpdateController(dt, screenResolution);
 
-	UpdateWeapons(dt, this->GetPosition());
+	Vector2f offset(0, -150);
+	UpdateWeapons(dt, (this->GetPosition() + offset));
 }

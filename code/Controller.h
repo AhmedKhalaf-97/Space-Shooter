@@ -31,10 +31,18 @@ public:
 	void TakeDamage(int damageAmount);
 	virtual void UpdateController(Time dt, Vector2f screenResolution);
 	FloatRect GetFloatRect();
+	bool IsAlive();
+	void SetIsAlive(bool condition);
+	void PlayHitVFX(Time dt);
+	bool ShouldDestroy();
+	Vector2f GetExplosionPosition();
 
 private:
 	Vector2f position;
 	Vector2f movingDirection;
+
+	bool alive = true;
+	bool shouldDestroy = false;
 
 protected:
 	Texture myTexture;
@@ -44,6 +52,11 @@ protected:
 
 	float movingSpeed;
 	int healthAmount;
+
+	bool shouldPlayHitVFX = false;
+	float flashRate = 0.1;
+	float nextTimeToFlash = 0;
+	float elapsedTime = 0;
 };
 
 #endif
