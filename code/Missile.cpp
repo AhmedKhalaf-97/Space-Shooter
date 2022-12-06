@@ -13,4 +13,6 @@ void Missile::ConfigureProjectile()
 	SetDirection(Vector2f(0, -1));
 	SetRotation(-90);
 	SetScale(Vector2f(1, 1));
+
+	SetDamageAmount(100);
 }

@@ -18,6 +18,7 @@ Weapon::Weapon(ProjectileType projectile)
 		 {
 			 Bullet* newBullet = new Bullet(position);
 			 newBullet->ConfigureProjectile();
+			 newBullet->GetSprite().setTextureRect(IntRect(position.x, position.y, 1, 1));
 			 projectiles.push_back(newBullet);
 		 }
 	 }
@@ -32,6 +33,7 @@ Weapon::Weapon(ProjectileType projectile)
 		 {
 			 Missile* newMissile = new Missile(position);
 			 newMissile->ConfigureProjectile();
+			 newMissile->GetSprite().setTextureRect(IntRect(position.x, position.y, 600, 600));
 			 projectiles.push_back(newMissile);
 		 }
 	 }
@@ -103,4 +105,18 @@ vector<Sprite> Weapon::GetActiveProjectileSprites()
 	}
 
 	return activeProjectileSprites;
+}
+
+vector<Projectile*> Weapon::GetActiveProjectiles()
+{
+	vector<Projectile*> activeProjectiles;
+
+	for (int i = 0; i < projectiles.size(); i++)
+	{
+		if (projectiles[i]->IsItActive())
+		{
+			activeProjectiles.push_back(projectiles[i]);
+		}
+	}
+	return activeProjectiles;
 }

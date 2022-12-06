@@ -96,6 +96,11 @@ vector<Sprite> EnemyAIController::GetProjectileSprites()
 	return weaponsAssigned[0].GetActiveProjectileSprites();
 }
 
+vector<Projectile*> EnemyAIController::GetProjectiles()
+{
+	return weaponsAssigned[0].GetActiveProjectiles();
+}
+
 void EnemyAIController::UpdateController(Time dt, Vector2f screenResolution)
 {
 	if (enabled)

@@ -50,6 +50,11 @@ void Projectile::SetDamageAmount(int damageAmount)
 	this->damageAmount = damageAmount;
 }
 
+int Projectile::GetDamageAmount()
+{
+	return damageAmount;
+}
+
 void Projectile::ActivateProjectile()
 {
 	isActive = true;
@@ -87,4 +92,9 @@ void Projectile::UpdatePositionWhenActive(Time dt, Vector2f screenResolution)
 			isActive = false;
 		}
 	}
+}
+
+FloatRect Projectile::GetFloatRect()
+{
+	return sprite.getGlobalBounds();
 }

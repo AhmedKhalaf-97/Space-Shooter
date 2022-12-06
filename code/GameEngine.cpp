@@ -70,6 +70,27 @@ void GameEngine::UpdateEnemiesAIBehaviour()
     }
 }
 
+void GameEngine::GetAllObjectsAndCheckForCollisions()
+{
+    allControllers.clear();
+    allProjectiles.clear();
+
+    allControllers.push_back(&player);
+    allControllers.insert(allControllers.end(), aliveEnemies.begin(), aliveEnemies.end());
+
+    allProjectiles = player.GetProjectiles();
+
+    for (int i = 0; i < aliveEnemies.size(); i++)
+    {
+        for (Projectile* projectile : aliveEnemies[i]->GetProjectiles())
+        {
+            allProjectiles.push_back(projectile);
+        }
+    }
+
+    collisionDetection.CheckForCollisions(allProjectiles, allControllers);
+}
+
 void GameEngine::Run()
 {
     Texture explosionTexture;
@@ -101,6 +122,8 @@ void GameEngine::Run()
         stringstream ss;
         ss << "Score:" << 100 << " Lives:" << 3;
         hud.setString(ss.str());
+
+        GetAllObjectsAndCheckForCollisions();
 
         player.Move();
         player.CheckIfShouldChangeWeapon();

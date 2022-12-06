@@ -14,6 +14,7 @@
 #include "PlayerController.h"
 #include "EnemyAIController.h"
 #include "Projectile.h"
+#include "CollisionDetection.h"
 
 using namespace sf;
 using namespace std;
@@ -26,6 +27,7 @@ public:
 	void UpdateBackground(int playerDirection);
 	void SpawnEnemies();
 	void UpdateEnemiesAIBehaviour();
+	void GetAllObjectsAndCheckForCollisions();
 	void Run();
 	void Draw();
 private:
@@ -48,6 +50,11 @@ private:
 	vector<EnemyAIController*> enemies;
 	vector<EnemyAIController*> aliveEnemies;
 
+	CollisionDetection collisionDetection;
+
+	vector<Controller*> allControllers;
+	vector<Projectile*> allProjectiles;
+
 #pragma region Dynamic background stuff
 	Texture backgroundTexture;
 	vector<Sprite> backgroundSprites;
@@ -66,7 +73,7 @@ private:
 	float speed = baseSpeed;
 #pragma endregion
 
-	int enemiesCount = 36; // Preferably to be in one of those numbers 4, 9, 16, 25, 36, 49, 64, etc...
+	int enemiesCount = 2; // Preferably to be in one of those numbers 4, 9, 16, 25, 36, 49, 64, etc...
 	int enemiesAlive;
 };
 

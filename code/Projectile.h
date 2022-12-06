@@ -19,11 +19,13 @@ public:
 	void SetDirection(Vector2f direction);
 	void SetSpeed(int speed);
 	void SetDamageAmount(int damageAmount);
+	int GetDamageAmount();
 	void ActivateProjectile();
 	void DeactivateProjectile();
 	bool IsItActive();
 	Sprite GetSprite();
 	void UpdatePositionWhenActive(Time dt, Vector2f screenResolution);
+	FloatRect GetFloatRect();
 
 protected:
 	Texture texture;

@@ -26,6 +26,7 @@ public:
 	void Fire(Time dt);
 	void Update(Time dt, Vector2f newPosition, Vector2f screenResolution);
 	vector<Sprite> GetActiveProjectileSprites();
+	vector<Projectile*> GetActiveProjectiles();
 private:
 	vector<Projectile*> projectiles;
 	ProjectileType projectileType;

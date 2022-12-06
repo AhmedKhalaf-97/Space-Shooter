@@ -12,7 +12,7 @@ PlayerController::PlayerController(Vector2f initialPosition): Controller(initial
 
 void PlayerController::Create(Vector2f initialPosition)
 {
-	healthAmount = 100;
+	healthAmount = 1000;
 	movingSpeed = 1000.0f;
 
 	myTexture.loadFromFile("graphics/destroyer.png");
@@ -85,13 +85,26 @@ void PlayerController::UpdateWeapons(Time dt, Vector2f newPos)
 vector<Sprite> PlayerController::GetProjectileSprites()
 {
 	vector<Sprite> allProjectileSprites = weaponsAssigned[0].GetActiveProjectileSprites();
+	vector<Sprite> projectileSprites_Weapon2 = weaponsAssigned[1].GetActiveProjectileSprites();
 
-	for (Sprite& thisSprite : weaponsAssigned[1].GetActiveProjectileSprites())
-	{
-		allProjectileSprites.push_back(thisSprite);
-	}
+	allProjectileSprites.insert(allProjectileSprites.end(),
+		projectileSprites_Weapon2.begin(),
+		projectileSprites_Weapon2.end());
 
 	return allProjectileSprites;
+}
+
+vector<Projectile*> PlayerController::GetProjectiles()
+{
+	vector<Projectile*> allProjectiles = weaponsAssigned[0].GetActiveProjectiles();
+	vector<Projectile*> projectiles_Weapon2 = weaponsAssigned[1].GetActiveProjectiles();
+
+
+	allProjectiles.insert(allProjectiles.end(),
+		projectiles_Weapon2.begin(),
+		projectiles_Weapon2.end());
+
+	return allProjectiles;
 }
 
 void PlayerController::UpdateController(Time dt, Vector2f screenResolution)

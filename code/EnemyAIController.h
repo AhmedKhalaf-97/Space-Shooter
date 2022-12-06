@@ -21,6 +21,7 @@ public:
 	void AssignWeapons() override;
 	void UpdateWeapons(Time dt, Vector2f newPos) override;
 	vector<Sprite> GetProjectileSprites() override;
+	vector<Projectile*> GetProjectiles() override;
 	void UpdateController(Time dt, Vector2f screenResolution);
 	bool IsEnabled();
 	void SetIsEnabled(bool condition);

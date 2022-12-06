@@ -58,6 +58,11 @@ Vector2f Controller::GetPosition()
 	return position;
 }
 
+int Controller::GetHealthAmount()
+{
+	return healthAmount;
+}
+
 void Controller::TakeDamage(int damageAmount)
 {
 	if (healthAmount > 0)
@@ -71,6 +76,7 @@ void Controller::TakeDamage(int damageAmount)
 	}
 	else
 	{
+		cout << "Killed" << endl;
 		healthAmount = 0;
 	}
 }
@@ -100,4 +106,9 @@ void Controller::UpdateController(Time dt, Vector2f screenResolution)
 	}
 
 	mySprite.setPosition(position);
+}
+
+FloatRect Controller::GetFloatRect()
+{
+	return mySprite.getGlobalBounds();
 }
