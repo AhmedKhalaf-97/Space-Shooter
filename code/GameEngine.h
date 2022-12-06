@@ -12,6 +12,7 @@
 #include "Spritesheet.h"
 
 #include "PlayerController.h"
+#include "EnemyAIController.h"
 #include "Projectile.h"
 
 using namespace sf;
@@ -22,10 +23,14 @@ class GameEngine
 public:
 	GameEngine();
 	void CreateBackground();
-	void UpdateBackground(Time dt, int playerDirection);
+	void UpdateBackground(int playerDirection);
+	void SpawnEnemies();
+	void UpdateEnemiesAIBehaviour();
 	void Run();
+	void Draw();
 private:
 	Clock clock;
+	Time dt;
 
 	bool isGameRunning = true;
 
@@ -40,6 +45,8 @@ private:
 	Font font;
 
 	PlayerController player;
+	vector<EnemyAIController*> enemies;
+	vector<EnemyAIController*> aliveEnemies;
 
 #pragma region Dynamic background stuff
 	Texture backgroundTexture;
@@ -55,12 +62,12 @@ private:
 	float minY;
 	float maxY;
 
-	float baseSpeed = 500;
+	float baseSpeed = 100;
 	float speed = baseSpeed;
 #pragma endregion
 
-	//ProjectileObjectsPool projectileObjectsPool;
-vector<Projectile*> projectiles;
+	int enemiesCount = 36; // Preferably to be in one of those numbers 4, 9, 16, 25, 36, 49, 64, etc...
+	int enemiesAlive;
 };
 
 #endif

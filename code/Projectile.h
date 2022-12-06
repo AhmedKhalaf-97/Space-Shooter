@@ -12,6 +12,7 @@ class Projectile
 public:
 	Projectile(Vector2f initialPos);
 	virtual void ConfigureProjectile() = 0;
+	void SetTexture(std::string fileName);
 	void SetPosition(Vector2f position);
 	void SetRotation(float angle);
 	void SetScale(Vector2f scale);

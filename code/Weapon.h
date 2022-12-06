@@ -20,9 +20,12 @@ class Weapon
 public:
 	Weapon();
 	Weapon(ProjectileType projectile);
-	vector<Sprite> GetActiveProjectileSprites();
+	void SetShootingDirection(Vector2f direction);
+	void OverrideProjectilesTexture(string fileName);
+	void SetFireRate(float rate);
 	void Fire(Time dt);
 	void Update(Time dt, Vector2f newPosition, Vector2f screenResolution);
+	vector<Sprite> GetActiveProjectileSprites();
 private:
 	vector<Projectile*> projectiles;
 	ProjectileType projectileType;

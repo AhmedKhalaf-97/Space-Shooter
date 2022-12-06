@@ -10,6 +10,19 @@ PlayerController::PlayerController(Vector2f initialPosition): Controller(initial
 	AssignWeapons();
 }
 
+void PlayerController::Create(Vector2f initialPosition)
+{
+	healthAmount = 100;
+	movingSpeed = 1000.0f;
+
+	myTexture.loadFromFile("graphics/destroyer.png");
+	mySprite.setTexture(myTexture);
+	mySprite.setScale(0.35, 0.35);
+	mySprite.setRotation(-90);
+
+	Controller::Create(initialPosition);
+}
+
 void PlayerController::Move()
 {
 	Vector2f dir(0, 0);

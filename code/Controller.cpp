@@ -23,13 +23,7 @@ void Controller::SetHealthAmount(int healthAmount)
 void Controller::Create(Vector2f initialPosition)
 {
 	position = initialPosition;
-	healthAmount = 100;
-	movingSpeed = 1000.0f;
 
-	myTexture.loadFromFile("graphics/destroyer.png");
-	mySprite.setTexture(myTexture);
-	mySprite.setScale(0.35, 0.35);
-	mySprite.setRotation(-90);
 	FloatRect objectRect = mySprite.getLocalBounds();
 	mySprite.setOrigin(objectRect.left +
 		objectRect.width / 2.0f,
@@ -46,6 +40,12 @@ void Controller::SetMovingSpeed(int speed)
 void Controller::SetMovingDirection(Vector2f dir)
 {
 	this->movingDirection = dir;
+}
+
+void Controller::SetPosition(Vector2f newPosition)
+{
+	position = newPosition;
+	mySprite.setPosition(position);
 }
 
 Vector2f Controller::GetMovingDirection()
@@ -100,6 +100,4 @@ void Controller::UpdateController(Time dt, Vector2f screenResolution)
 	}
 
 	mySprite.setPosition(position);
-
-	//UpdateWeapons(dt, position);
 }

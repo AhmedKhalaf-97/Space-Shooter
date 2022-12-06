@@ -19,7 +19,55 @@ GameEngine::GameEngine()
 
     CreateBackground();
 
-	player.Create(Vector2f(screenResolution.x / 2, screenResolution.y / 2));
+	player.Create(Vector2f(screenResolution.x / 2, screenResolution.y - 100));
+
+    SpawnEnemies();
+}
+
+void GameEngine::SpawnEnemies()
+{
+    for (int i = 0; i < enemiesCount; i++)
+    {
+        EnemyAIController* enemy = new EnemyAIController();
+        enemy->Create(Vector2f(250, 250));
+        enemies.push_back(enemy);
+    }
+
+    //Design the level.
+    int sqrtOfEnemiesCount = sqrt(enemiesCount);
+    Vector2f spawningStartPoint(screenResolution.x * 0.3, (-200 * sqrtOfEnemiesCount));
+    int gapSize = 200;
+    int x = 0;
+
+    for (int r = 0; r < sqrtOfEnemiesCount; r++)
+    {
+        for (int c = 0; c < sqrtOfEnemiesCount; c++)
+        {
+            enemies[x]->SetPosition(Vector2f(spawningStartPoint.x + (r * gapSize), spawningStartPoint.y + (c * gapSize)));
+            x++;
+        }
+    }
+}
+
+void GameEngine::UpdateEnemiesAIBehaviour()
+{
+    aliveEnemies.clear();
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        if (enemies[i]->IsEnabled())
+        {
+            aliveEnemies.push_back(enemies[i]);
+        }
+    }
+
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        enemies[i]->Move();
+        enemies[i]->SetMovingSpeed(speed);
+        enemies[i]->UpdateController(dt, screenResolution);
+        enemies[i]->UpdateSurrondings(&player, &aliveEnemies);
+        enemies[i]->CheckIfShouldFire(dt);
+    }
 }
 
 void GameEngine::Run()
@@ -36,7 +84,7 @@ void GameEngine::Run()
     while (window.isOpen())
     {
         Event event;
-        Time dt = clock.restart();
+        dt = clock.restart();
         while (window.pollEvent(event))
         {
             if (event.type == Event::Closed)
@@ -59,28 +107,45 @@ void GameEngine::Run()
         player.CheckIfShouldFire(dt);
         player.UpdateController(dt, screenResolution);
 
-        UpdateBackground(dt, player.GetMovingDirection().y);
+        UpdateEnemiesAIBehaviour();
+
+        UpdateBackground(player.GetMovingDirection().y);
 
         sp.PlayAnimation(dt);
 
-        window.clear();
+        Draw();
+    }
+}
 
-        window.setView(mainView);
+void GameEngine::Draw()
+{
+    window.clear();
 
-        window.draw(Sprite(finalBackgroundRenderTexture.getTexture()));
+    window.setView(mainView);
 
-        window.draw(player.GetSprite());
+    window.draw(Sprite(finalBackgroundRenderTexture.getTexture()));
 
-        for (Sprite& projectileSprite : player.GetProjectileSprites())
+    window.draw(player.GetSprite());
+
+    for (Sprite& projectileSprite : player.GetProjectileSprites())
+    {
+        window.draw(projectileSprite);
+    }
+
+    for (int i = 0; i < aliveEnemies.size(); i++)
+    {
+        window.draw(aliveEnemies[i]->GetSprite());
+
+        for (Sprite& projectileSprite : enemies[i]->GetProjectileSprites())
         {
             window.draw(projectileSprite);
         }
-
-        window.draw(sp.GetSprite());
-
-        window.setView(hudView);
-        window.draw(hud);
-
-        window.display();
     }
+
+    //window.draw(sp.GetSprite());
+
+    window.setView(hudView);
+    window.draw(hud);
+
+    window.display();
 }

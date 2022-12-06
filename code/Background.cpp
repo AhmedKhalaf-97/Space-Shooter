@@ -33,7 +33,7 @@ void GameEngine::CreateBackground()
 	finalBackgroundRenderTexture.create(screenResolution.x, screenResolution.y);
 }
 
-void GameEngine::UpdateBackground(Time dt, int playerDirection)
+void GameEngine::UpdateBackground(int playerDirection)
 {
 	if (playerDirection == -1) // Player is moving forward.
 	{

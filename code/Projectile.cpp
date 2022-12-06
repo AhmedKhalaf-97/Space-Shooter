@@ -14,6 +14,12 @@ Projectile::Projectile(Vector2f initialPos)
 	damageAmount = 100;
 }
 
+void Projectile::SetTexture(std::string fileName)
+{
+	texture.loadFromFile(fileName);
+	sprite.setTexture(texture);
+}
+
 void Projectile::SetPosition(Vector2f position)
 {
 	this->position = position;

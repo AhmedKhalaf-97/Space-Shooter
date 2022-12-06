@@ -37,6 +37,27 @@ Weapon::Weapon(ProjectileType projectile)
 	 }
 }
 
+void Weapon::OverrideProjectilesTexture(string fileName)
+{
+	for (int i = 0; i < projectiles.size(); i++)
+	{
+		projectiles[i]->SetTexture(fileName);
+	}
+}
+
+void Weapon::SetShootingDirection(Vector2f direction)
+{
+	for (int i = 0; i < projectiles.size(); i++)
+	{
+		projectiles[i]->SetDirection(direction);
+	}
+}
+
+void Weapon::SetFireRate(float rate)
+{
+	fireRate = rate;
+}
+
 void Weapon::Fire(Time dt)
 {
 	Vector2f positionWithOffset = Vector2f(position.x - 35, position.y - 60);
