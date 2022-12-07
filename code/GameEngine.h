@@ -97,7 +97,7 @@ private:
 	float speed = baseSpeed;
 #pragma endregion
 
-	int enemiesCount = 100; // Preferably to be in one of those numbers 4, 9, 16, 25, 36, 49, 64, etc...
+	int enemiesCount = 36; // Preferably to be in one of those numbers 4, 9, 16, 25, 36, 49, 64, etc...
 	int enemiesAlive;
 
 	int explosionVFXsPoolCount = 100;

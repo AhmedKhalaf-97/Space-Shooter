@@ -6,7 +6,7 @@ GameEngine::GameEngine()
 	screenResolution.y = VideoMode::getDesktopMode().height;
 
 	window.create(VideoMode(screenResolution.x, screenResolution.y),
-		"Space Shooter", Style::Default);
+		"Space Shooter", Style::Fullscreen);
 
 	 mainView.reset(FloatRect(0, 0, screenResolution.x, screenResolution.y));
 	 UI_View.reset(FloatRect(0, 0, screenResolution.x, screenResolution.y));
