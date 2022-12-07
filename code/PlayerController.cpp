@@ -12,7 +12,7 @@ PlayerController::PlayerController(Vector2f initialPosition): Controller(initial
 
 void PlayerController::Create(Vector2f initialPosition)
 {
-	healthAmount = 100;
+	healthAmount = 1000;
 	movingSpeed = 1000.0f;
 
 	myTexture.loadFromFile("graphics/destroyer.png");
@@ -46,14 +46,20 @@ void PlayerController::Move()
 		dir.x = -1.0;
 	}
 
-	SetMovingDirection(dir);
+	if (IsAlive())
+	{
+		SetMovingDirection(dir);
+	}
 }
 
 void PlayerController::CheckIfShouldFire(Time dt)
 {
-	if (Keyboard::isKeyPressed(Keyboard::Space))
+	if (IsAlive())
 	{
-		weaponsAssigned[selectedProjectileType].Fire(dt);
+		if (Keyboard::isKeyPressed(Keyboard::Space))
+		{
+			weaponsAssigned[selectedProjectileType].Fire(dt);
+		}
 	}
 }
 
@@ -105,6 +111,11 @@ vector<Projectile*> PlayerController::GetProjectiles()
 		projectiles_Weapon2.end());
 
 	return allProjectiles;
+}
+
+string PlayerController::GetType()
+{
+	return "Player";
 }
 
 void PlayerController::UpdateController(Time dt, Vector2f screenResolution)

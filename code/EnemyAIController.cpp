@@ -101,6 +101,11 @@ vector<Projectile*> EnemyAIController::GetProjectiles()
 	return weaponsAssigned[0].GetActiveProjectiles();
 }
 
+string EnemyAIController::GetType()
+{
+	return "Enemy";
+}
+
 void EnemyAIController::UpdateController(Time dt, Vector2f screenResolution)
 {
 	PlayHitVFX(dt);
@@ -116,6 +121,11 @@ void EnemyAIController::UpdateController(Time dt, Vector2f screenResolution)
 
 		position.x += GetMovingDirection().x * movingSpeed * dt.asSeconds();
 		position.y += GetMovingDirection().y * movingSpeed * dt.asSeconds();
+
+		if (position.y > screenResolution.y)
+		{
+			SetIsAlive(false);
+		}
 
 		SetPosition(position);
 

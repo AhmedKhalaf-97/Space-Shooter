@@ -18,6 +18,7 @@ public:
 	void UpdateWeapons(Time dt, Vector2f newPos) override;
 	vector<Sprite> GetProjectileSprites() override;
 	vector<Projectile*> GetProjectiles() override;
+	string GetType() override;
 	void UpdateController(Time dt, Vector2f screenResolution);
 private:
 	ProjectileType selectedProjectileType = ProjectileType::Bullet_Type;

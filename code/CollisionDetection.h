@@ -5,6 +5,7 @@
 
 #include "Projectile.h"
 #include "Controller.h"
+#include "PlayerController.h"
 
 class CollisionDetection
 {

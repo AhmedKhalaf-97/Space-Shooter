@@ -8,6 +8,7 @@
 #include <sstream>
 #include <cmath>
 #include <iostream>
+#include <iomanip>
 
 #include "Spritesheet.h"
 
@@ -30,23 +31,44 @@ public:
 	void GetAllObjectsAndCheckForCollisions();
 	void InstantiateExplosionVFXsObjects();
 	void PlayExplosions();
+	void LoadUI();
+	void CenterTheOriginForTexts();
+	void UpdateHud();
+	void DrawUI();
+	void CheckIfLevelIsCompleted();
 	void Run();
 	void Draw();
 private:
 	Clock clock;
 	Time dt;
 
-	bool isGameRunning = true;
+	bool isGameStarted = false;
+	bool isGameOver = false;
+	bool isLevelCompleted = false;
 
 	Vector2f screenResolution;
 
 	RenderWindow window;
 
 	View mainView;
-	View hudView;
+	View UI_View;
 
-	Text hud;
+	int score;
+	int initialPlayerHealthAmount;
+
 	Font font;
+
+	vector<Text*> allTexts;
+
+	Text titleText;
+	Text startGameText;
+	Text instructionsText; 
+
+	Text hudText;
+
+	Text gameOverText;
+
+	Text levelCompletedText;
 
 	PlayerController player;
 	vector<EnemyAIController*> enemies;
@@ -75,13 +97,16 @@ private:
 	float speed = baseSpeed;
 #pragma endregion
 
-	int enemiesCount = 64; // Preferably to be in one of those numbers 4, 9, 16, 25, 36, 49, 64, etc...
+	int enemiesCount = 100; // Preferably to be in one of those numbers 4, 9, 16, 25, 36, 49, 64, etc...
 	int enemiesAlive;
 
 	int explosionVFXsPoolCount = 100;
 	int availableExplosionVFXsIndex = 0;
 	Texture explosionTexture;
 	vector<Spritesheet*> explosionVFXs;
+
+	SoundBuffer explosionSFXBuffer;
+	Sound explosionSFX;
 };
 
 #endif

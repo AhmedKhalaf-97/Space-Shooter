@@ -13,4 +13,18 @@ void CollisionDetection::CheckForCollisions(vector<Projectile*>& projectiles, ve
 			}
 		}
 	}
+
+	for (Controller* controller : controllers)
+	{
+		for (Controller* otherController : controllers)
+		{
+			if (controller->GetType() == "Player" && otherController->GetType() == "Enemy")
+			{
+				if (controller->IsAlive() && controller->GetFloatRect().intersects(otherController->GetFloatRect()))
+				{
+					controller->TakeDamage(1000);
+				}
+			}
+		}
+	}
 }

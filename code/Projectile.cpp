@@ -68,6 +68,7 @@ int Projectile::GetDamageAmount()
 
 void Projectile::ActivateProjectile()
 {
+	PlayLaserBulletSFX();
 	isActive = true;
 }
 

@@ -21,6 +21,7 @@ public:
 	virtual void CheckIfShouldFire(Time dt) = 0;
 	virtual vector<Sprite> GetProjectileSprites() = 0;
 	virtual vector<Projectile*> GetProjectiles() = 0;
+	virtual string GetType() = 0;
 	void SetMovingSpeed(int speed);
 	void SetMovingDirection(Vector2f dir);
 	void SetPosition(Vector2f newPosition);

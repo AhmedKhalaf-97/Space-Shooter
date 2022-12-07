@@ -5,9 +5,11 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "SoundManager.h"
+
 using namespace sf;
 
-class Projectile
+class Projectile: public SoundManager
 {
 public:
 	Projectile(Vector2f initialPos);
